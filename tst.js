@@ -75,4 +75,59 @@ r = createDreamTeam([
     'jasmine',
     'brooke',
   ])
-console.log(r);
+  function getSeason(date ) {  
+  
+    console.debug('before', date);
+  
+  
+    if(!date) return 'Unable to determine the time of year!';
+    if(!(date instanceof Date) ) return 'Invalid date!';
+  //'Unable to determine the time of year!'
+  console.debug('afte', date);
+
+    let month = date.getMonth();
+    if(month < 2 || month == 11) return 'winter';
+    if(month < 5 ) return 'spring';
+    if(month < 8 ) return 'summer';
+    if(month < 11 ) return 'autumn';
+  }
+//   function getSeason(date ) {  
+  
+//     try{
+//       console.log(date)
+//       if(!date) return 'Unable to determine the time of year!';
+//       if(!(date instanceof Date) ) return 'Invalid date!';
+//     //'Unable to determine the time of year!'
+      
+  
+//       let month = date.getMonth();
+//       if(month < 2 || month == 11) return 'winter';
+//       if(month < 5 ) return 'spring';
+//       if(month < 8 ) return 'summer';
+//       if(month < 11 ) return 'autumn';
+//     }
+//     catch{
+//       throw 'Invalid date!';
+//     }
+    
+//   }
+function fakeDateDestroyer(d){
+
+    let date = new Date(1456, 0, 2, 1, 50, 9, 238);
+    for (const e in d) {
+        
+    }
+    for (const e of date) {
+        
+    }
+}
+const fakeDate = {
+    toString() {
+        return Date.prototype.toString.call(new Date());
+    },
+    [Symbol.toStringTag]: 'Date'
+};
+
+Object.setPrototypeOf(fakeDate, Object.getPrototypeOf(new Date()));
+
+console.log(fakeDateDestroyer(fakeDate));
