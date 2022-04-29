@@ -217,45 +217,139 @@
 
 // ]
 
-const chainMaker = {
-	chain: [],
-	getLength() {
+// const chainMaker = {
+// 	chain: [],
+// 	getLength() {
 
 
-	},
-	addLink(value) {
-		this.chain.push(value);
-		return this;
+// 	},
+// 	addLink(value) {
+// 		this.chain.push(value);
+// 		return this;
 
-	},
-	removeLink(position) {
-		if(position <= 0 || position > this.chain.length || isNaN(position)){
-			throw new Error("You can\'t remove incorrect link!");
-		}
-		this.chain.splice(position-1, 1);
-		return this;
+// 	},
+// 	removeLink(position) {
+// 		if(position <= 0 || position > this.chain.length || isNaN(position)){
+// 			throw new Error("You can\'t remove incorrect link!");
+// 		}
+// 		this.chain.splice(position-1, 1);
+// 		return this;
 
-	},
-	reverseChain() {
-		this.chain.reverse();
-		return this;
+// 	},
+// 	reverseChain() {
+// 		this.chain.reverse();
+// 		return this;
 
-	},
-	finishChain() {
-		result = '';
-		for (let i = 0; i < this.chain.length; i++) {
-			result +=`( ${this.chain[i]} )` 
-			if(i != this.chain.length-1){
-				result += '~~';
-			}
-		}
-		return result;
+// 	},
+// 	finishChain() {
+// 		result = '';
+// 		for (let i = 0; i < this.chain.length; i++) {
+// 			result +=`( ${this.chain[i]} )` 
+// 			if(i != this.chain.length-1){
+// 				result += '~~';
+// 			}
+// 		}
+// 		return result;
+// 	}
+// };
+// arr = [
+// 	chainMaker.addLink(1).addLink(2).addLink(3).removeLink(0),
+//     chainMaker.addLink(1).addLink(2).addLink(3).removeLink('2nd'),
+//     chainMaker.addLink(1).addLink(2).addLink(3).removeLink(-2),
+//     chainMaker.addLink(1).addLink(2).addLink(3).removeLink(4)
+// ];
+// console.log(arr[3]);
+
+// class DepthCalculator {
+// 	constructor(){
+// 		this.maxLevel = 0;
+// 	}
+// 	checkMaxLevel(level){
+// 		if(this.maxLevel< level){
+// 			this.maxLevel = level;
+// 		}
+// 	}
+// 	calculateDepth(arr, level) {
+
+// 		if(arr === undefined ){
+// 			return 1;
+// 		}
+
+// 		if (level === undefined) {				
+// 			level = 1;
+// 		}
+
+// 		this.checkMaxLevel(level);
+
+// 		for (let i = 0; i < arr.length; i++) {
+// 			if(Array.isArray(arr[i])) {
+// 				this.calculateDepth(arr[i], level+1)
+// 			}
+// 		}
+// 		return this.maxLevel;
+// 	}
+// }
+
+// let a =[
+//  [1, 2, 3, [1], 4, 5, [1]],
+//  [1, 2, 3, [8, [2]], 4, 5, []],
+//  [1, [8, [[]]], [[[[[[[[[[[[[[[[[[[[[[[[[[[[[[]]]]]]], []]]], []]]]]]]]], []]]], []]]]]]]]]], 2, 3, [8, [[[[[[[[[[[[[[]]]]]]]]]]]]]]], [8, [[[[[[[[[[[[[[[[[[[[[[[]]]]]]]]]]]]]]]]]]]]]]]], 4, 5, ['6575', ['adas', ['dfg', [0]]]]],
+//  [1, 2, 3, 4, [1, 2, [1, 2, [[[]]]]], 5, [1, [[[[[[]]]]]]]],
+//  [[[[[[[[[[]]]]]]]]]]
+// ]
+// const d = new DepthCalculator();
+// console.log(d.calculateDepth(a[3]))
+
+function repeater(str, options) {
+	let result = '';
+
+	const repeat = options.repeatTimes || 1;
+	const sepSample = options.separator || '+';
+	let addSamp;
+	if(options.addition !== undefined) {
+		addSamp = String(options.addition);
 	}
-};
-arr = [
-	chainMaker.addLink(1).addLink(2).addLink(3).removeLink(0),
-    chainMaker.addLink(1).addLink(2).addLink(3).removeLink('2nd'),
-    chainMaker.addLink(1).addLink(2).addLink(3).removeLink(-2),
-    chainMaker.addLink(1).addLink(2).addLink(3).removeLink(4)
-];
-console.log(arr[3]);
+	
+	const addRep = options.additionRepeatTimes || 1;
+	const addSepSample = options.additionSeparator || '|';
+
+	let addition = '';
+	//addSamp = addSamp.;
+	str = str+'';
+	if (addSamp) {
+		for (let i = 0; i < addRep; i++) {
+			let addSep = i != addRep - 1 ? addSepSample : '';
+			addition += `${addSamp}${addSep}`;
+		}
+	}
+
+	for (let i = 0; i < repeat; i++) {
+		let sep = i != repeat - 1 ? sepSample : '';
+		result += `${str}${addition}${sep}`;
+	}
+	return result;
+}
+const a = [
+	// repeater('la', {
+	// 	repeatTimes: 3
+	// }),
+	// repeater('la', {
+	// 	repeatTimes: 3,
+	// 	separator: 's',
+	// 	addition: '+',
+	// 	additionRepeatTimes: 1
+	// }),
+	// repeater('TESTstr', {
+	// 	separator: 'ds',
+	// 	addition: 'ADD!',
+	// 	additionSeparator: ')))000'
+	// }),
+	repeater(true, {
+		repeatTimes: 3,
+		separator: '??? ',
+		addition: false,
+		additionRepeatTimes: 2,
+		additionSeparator: '!!!'
+	})
+]
+console.log(a[0]);
