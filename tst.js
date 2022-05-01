@@ -590,8 +590,117 @@ function getDNSStats(domains) {
 
 }
 
+// function encodeLine(str) {
+// 	const lst = str.split('');
+// 	let els = []
+// 	let lastEl = null;
+// 	let result = '';
+// 	for (let i = 0; i < lst.length; i++) {
+// 		if(lastEl == null){
+// 			lastEl = lst[i];
+// 			els.push(lst[i]);
+// 		}
+// 		else if (lastEl == lst[i]){
+// 			els.push(lst[i]);
+// 		}
+// 		else if (lastEl != lst[i]){
+// 			result += `${els.length>1?els.length:''}${lastEl}`;
+// 			lastEl = lst[i];
+// 			els = [];
+// 			els.push(lst[i]);
+// 		}
+
+// 	}
+// 	result += `${els.length>1?els.length:''}${lastEl}`;
+// 	return result;
+// }
+// function renameFiles( names ) {
+// 	const repeats = {};
+// 	const result = [];
+// 	for (let i = 0; i < names.length; i++) {
+// 		if (names[i] in repeats) {
+// 			repeats[names[i]] += 1;
+// 		}
+// 		else{
+// 			repeats[names[i]] = 0;
+// 		}
+// 		let counts = repeats[names[i]]>0? `(${repeats[names[i]]})` : ''; 
+// 		result.push(`${names[i]}${counts}`);
+// 		repeats[`${names[i]}${counts}`] = 0;
+// 	}
+//   return result;
+// }
+// function getEmailDomain( email ) {
+//   let dogIndex = email.lastIndexOf('@');
+//   let domain = email.slice(dogIndex, email.length);
+//   return domain;
+// }
+// function isMAC48Address(n ) {
+// 	let pairs = n.split('-');
+// 	if(pairs.length !=6) return false;
+// 	for(let i = 0; i < pairs.length; i++){
+// 		let symbol1 = (pairs[i][0].charCodeAt(0) >= 65 && pairs[i][0].charCodeAt(0) <=70) ||
+// 		(pairs[i][0].charCodeAt(0)>=48 && pairs[i][0].charCodeAt(0)<=57)
+// 		if (!symbol1) return false;
+// 		let symbol2 = (pairs[i][1].charCodeAt(0) >= 65 && pairs[i][1].charCodeAt(0) <=70) ||
+// 		(pairs[i][1].charCodeAt(0)>=48 && pairs[i][1].charCodeAt(0)<=57)
+// 		 if(!symbol2) return false;
+// 	}
+// 	return true;
+//   }
+// function getMatrixElementsSum(matrix) {
+// 	let colPass = [];
+// 	let result = 0;
+// 	for (let i = 0; i < matrix.length; i++) {
+// 		for (let j = 0; j < matrix[i].length;j++) {
+// 			if (matrix[i][j] == 0 || colPass.includes(j) ) {
+// 				if(!colPass.includes(j)){
+// 					colPass.push(j);
+// 				}
+// 				continue;
+// 			}
+// 			result += matrix[i][j];
+
+// 		}
+
+// 	}
+// 	return result;
+// }
+
+function minesweeper(matrix) {
+	result = [];
+	for (let i = 0; i < matrix.length; i++) {
+		result.push(matrix[i].slice());
+		for (let j = 0; j < matrix[i].length; j++) {
+			let mines = 0;
+			result[i][j] = 0;
+			for (let z = -1; z < 2; z++) {
+				for (let k = -1; k < 2; k++){
+					if(z==0 && k==0) continue;
+					if(i+z<0 || i+z>=matrix.length) continue;
+					if(j+k<0 || j+k>=matrix[i].length) continue;   //matrix[i][j].length) continue;
+					console.log(i+z,j+k);
+					if(matrix[i+z][j+k] == true){
+						result[i][j] += 1;
+					}
+
+				}
+				
+			}
+		}
+		
+	}
+	return result;
+}
 tests = [
-	//getDNSStats(['epam.com']),
-	getDNSStats(['epam.com', 'info.epam.com'])
+	minesweeper([
+		[true, false, false],
+		[false, true, false],
+		[false, false, false],
+	]),
+	minesweeper([
+        [false, false, false],
+        [false, false, false],
+      ]),
 ]
 console.log(tests);
