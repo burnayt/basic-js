@@ -31,6 +31,7 @@ class DepthCalculator {
 
 		if (level === undefined) {				
 			level = 1;
+			this.maxLevel = 0;
 		}
 
 		this.checkMaxLevel(level);

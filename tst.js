@@ -295,61 +295,303 @@
 //  [1, 2, 3, [8, [2]], 4, 5, []],
 //  [1, [8, [[]]], [[[[[[[[[[[[[[[[[[[[[[[[[[[[[[]]]]]]], []]]], []]]]]]]]], []]]], []]]]]]]]]], 2, 3, [8, [[[[[[[[[[[[[[]]]]]]]]]]]]]]], [8, [[[[[[[[[[[[[[[[[[[[[[[]]]]]]]]]]]]]]]]]]]]]]]], 4, 5, ['6575', ['adas', ['dfg', [0]]]]],
 //  [1, 2, 3, 4, [1, 2, [1, 2, [[[]]]]], 5, [1, [[[[[[]]]]]]]],
-//  [[[[[[[[[[]]]]]]]]]]
+//  [[[[[[[[[[]]]]]]]]]], 
+//  [1, [8, [[]]], 2, 3, [8, []], 4, 5, ['6575', ['adas', ['dfg', [0]]]]]
+
 // ]
 // const d = new DepthCalculator();
-// console.log(d.calculateDepth(a[3]))
+// console.log(d.calculateDepth(a[5]))
 
-function repeater(str, options) {
-	let result = '';
+// function repeater(str, options) {
+// 	let result = '';
 
-	const repeat = options.repeatTimes || 1;
-	const sepSample = options.separator || '+';
-	let addSamp;
-	if(options.addition !== undefined) {
-		addSamp = String(options.addition);
+// 	const repeat = options.repeatTimes || 1;
+// 	const sepSample = options.separator || '+';
+// 	let addSamp;
+// 	if(options.addition !== undefined) {
+// 		addSamp = String(options.addition);
+// 	}
+
+// 	const addRep = options.additionRepeatTimes || 1;
+// 	const addSepSample = options.additionSeparator || '|';
+
+// 	let addition = '';
+// 	//addSamp = addSamp.;
+// 	str = str+'';
+// 	if (addSamp) {
+// 		for (let i = 0; i < addRep; i++) {
+// 			let addSep = i != addRep - 1 ? addSepSample : '';
+// 			addition += `${addSamp}${addSep}`;
+// 		}
+// 	}
+
+// 	for (let i = 0; i < repeat; i++) {
+// 		let sep = i != repeat - 1 ? sepSample : '';
+// 		result += `${str}${addition}${sep}`;
+// 	}
+// 	return result;
+// }
+// const a = [
+// 	// repeater('la', {
+// 	// 	repeatTimes: 3
+// 	// }),
+// 	// repeater('la', {
+// 	// 	repeatTimes: 3,
+// 	// 	separator: 's',
+// 	// 	addition: '+',
+// 	// 	additionRepeatTimes: 1
+// 	// }),
+// 	// repeater('TESTstr', {
+// 	// 	separator: 'ds',
+// 	// 	addition: 'ADD!',
+// 	// 	additionSeparator: ')))000'
+// 	// }),
+// 	repeater(true, {
+// 		repeatTimes: 3,
+// 		separator: '??? ',
+// 		addition: false,
+// 		additionRepeatTimes: 2,
+// 		additionSeparator: '!!!'
+// 	})
+// ]
+// console.log(a[0]);
+function getChar(index) {
+	//console.log(65+index);
+	return String.fromCharCode(65 + index);
+}
+
+function getNum(alpha) {
+	return alpha.charCodeAt(0) - 64;
+}
+
+function alphaShift(i, j) {
+	i--;
+	j--;
+	let result = i + j;
+	if (result >= 26) {
+		result -= 26;
 	}
-	
-	const addRep = options.additionRepeatTimes || 1;
-	const addSepSample = options.additionSeparator || '|';
+	//console.log(getChar(result))
+	return getChar(result);
+}
 
-	let addition = '';
-	//addSamp = addSamp.;
-	str = str+'';
-	if (addSamp) {
-		for (let i = 0; i < addRep; i++) {
-			let addSep = i != addRep - 1 ? addSepSample : '';
-			addition += `${addSamp}${addSep}`;
+function encryptSymbol(symbol1, symbol2) {
+	return alphaShift(getNum(symbol1), getNum(symbol2));
+}
+
+
+let msg1 = 'Z';
+let key1 = 'J'; //5
+//let cipher1 = 'G' // 7
+
+function alphaShiftReverse(keySymbol, cipherSymbol) {
+	let tempResult = 0;
+	let result = 0;
+	for (let k = 0; k < 26; k++) {
+		if (keySymbol + k + 65 <= 90) {
+			tempResult = getChar(keySymbol + k);
+		} else {
+			tempResult = getChar(keySymbol + k - 26);
 		}
-	}
-
-	for (let i = 0; i < repeat; i++) {
-		let sep = i != repeat - 1 ? sepSample : '';
-		result += `${str}${addition}${sep}`;
+		if (tempResult == getChar(cipherSymbol - 1)) {
+			result = getChar(k + 1);
+		}
 	}
 	return result;
 }
-const a = [
-	// repeater('la', {
-	// 	repeatTimes: 3
-	// }),
-	// repeater('la', {
-	// 	repeatTimes: 3,
-	// 	separator: 's',
-	// 	addition: '+',
-	// 	additionRepeatTimes: 1
-	// }),
-	// repeater('TESTstr', {
-	// 	separator: 'ds',
-	// 	addition: 'ADD!',
-	// 	additionSeparator: ')))000'
-	// }),
-	repeater(true, {
-		repeatTimes: 3,
-		separator: '??? ',
-		addition: false,
-		additionRepeatTimes: 2,
-		additionSeparator: '!!!'
-	})
+console.log(alphaShiftReverse(getNum('N'), getNum('N')))
+
+//console.log(alphaShift ( getNum(a1), getNum(a2) ) ) ;
+//console.log('encrypt', encryptSymbol(msg1,key1)) ;
+//console.log('decrypt', alphaShiftReverse(getNum(key1), getNum(cipher1)))
+// let cipher1 = encryptSymbol(msg1, key1);
+// if (alphaShiftReverse(getNum(key1), getNum(cipher1)) == msg1) {
+// 	console.log('ok');
+// }
+// let key = 'abc'
+// let j = 0;
+// result = '';
+// for (let i = 0; i < 'somestring'.length; i++) {
+// 	result += key[j];
+// 	j++;
+// 	if (j >= key.length) {
+// 		j = 0;
+// 	}
+// }
+// console.log(result.length, 'somestring'.length);
+
+
+class VigenereCipheringMachine {
+	constructor(type) {
+		if (type == true || type == undefined) {
+			this.reverse = false;
+		} else {
+			this.reverse = true;
+		}
+	}
+	getChar(index) {
+		//console.log(65+index);
+		return String.fromCharCode(65 + index);
+	}
+
+	getNum(alpha) {
+		return alpha.charCodeAt(0) - 64;
+	}
+
+
+	alphaShift(msgSymbol, keySymbol) {
+		msgSymbol--;
+		keySymbol--;
+		let result = msgSymbol + keySymbol;
+		if (result >= 26) {
+			result -= 26;
+		}
+		//console.log(getChar(result))
+		return getChar(result);
+	}
+
+	alphaShiftReverse(keySymbol, cipherSymbol) {
+		if (keySymbol == cipherSymbol) return 'A';
+		let tempResult = 0;
+		let result = 0;
+		for (let k = 0; k < 26; k++) {
+			if (keySymbol + k + 65 <= 90) {
+				tempResult = getChar(keySymbol + k);
+			} else {
+				tempResult = getChar(keySymbol + k - 26);
+			}
+			if (tempResult == getChar(cipherSymbol - 1)) {
+				result = getChar(k + 1);
+			}
+		}
+		return result;
+	}
+
+	getEncryptSymbol(msgSymbol, keySymbol) {
+		return this.alphaShift(getNum(msgSymbol), getNum(keySymbol));
+	}
+
+	getDecryptSymbol(keySymbol, cipherSymbol) {
+		return this.alphaShiftReverse(getNum(keySymbol), getNum(cipherSymbol));
+	}
+
+	encrypt(message, key) {
+		if (!message || !key) {
+			throw new Error("Incorrect arguments!");
+		}
+		//message = message.toUpperCase();
+		let result = [];
+		let j = 0;
+		for (let i = 0; i < message.length; i++) {
+			if ((message[i].charCodeAt(0) >= 65 && message[i].charCodeAt(0) <= 90) ||
+				(message[i].charCodeAt(0) >= 97 && message[i].charCodeAt(0) <= 122))
+
+			{
+				const cipherSymbol = this.getEncryptSymbol(
+					message[i].toUpperCase(),
+					key[j].toUpperCase());
+				result.push(cipherSymbol)
+				j++;
+			} else {
+				result.push(message[i]);
+			}
+
+			//j++;
+			if (j >= key.length) {
+				j = 0;
+			}
+		}
+		if (this.reverse) {
+			return result.reverse().join('');
+		}
+		return result.join('');
+	}
+	decrypt(message, key) {
+		if (!message || !key) {
+			throw new Error("Incorrect arguments!");
+		}
+
+		let result = [];
+		let j = 0;
+		for (let i = 0; i < message.length; i++) {
+			if (message[i].charCodeAt[0] >= 65 && message[i].charCodeAt[0] <= 90 &&
+				message[i].charCodeAt[0] >= 97 && message[i].charCodeAt[0] <= 122) {
+				const cipherSymbol = this.getDecryptSymbol(
+					key[j].toUpperCase(),
+					message[i].toUpperCase());
+				result.push(cipherSymbol)
+				j++;
+			} else {
+				result.push(message[i]);
+			}
+
+			//j++;
+			if (j >= key.length) {
+				j = 0;
+			}
+		}
+		if (this.reverse) {
+			return result.reverse().join('');
+		}
+		return result.join('');
+	}
+}
+/*
+message[i] != ' ' && message[i] != '!' &&
+				message[i] != ':' && message[i] != ',' &&
+				message[i] != '.' && message[i] != '(' &&
+        message[i] != ')' && message[i] != '/' &&
+        message[i] != '%' && message[i] != '+' && 
+        message[i] != '-' && message[i] != '*' && 
+        message[i] != '#'
+        && isNaN(message[i]
+*/
+//const machine = new VigenereCipheringMachine()
+// function getCommonCharacterCount(s1, s2) {
+// 	if(!s1 || ! s2) return 0;
+// 	let used = [];
+// 	let result = 0;
+// 	for (let i = 0; i < s1.length; i++) {
+// 		let number = s2.indexOf(s1[i]);
+// 		if( number != -1 && !used.includes(number) ) {
+// 			result ++;
+// 			used.push(number);
+// 		}		
+// 	}  
+// 	return result;
+// }
+function getDNSStats(domains) {
+	if (domains.length === 0) return {};
+	let result = {};
+	for (let i = 0; i < domains.length; i++) {
+		let strings = domains[i].split('.');
+		for (let j = strings.length - 1; j >= 0; j--) {
+			let c = strings.slice(j, strings.length);
+			if (c.length == 1) {
+				let key = '.' + c[0];
+				if (result[key] == undefined) {
+					result[key] = 1;
+				} else {
+					result[key] += 1
+				}
+			} else {
+				c = c.reverse().join('.');
+				c = '.' + c;
+				if (result[c] == undefined) {
+					result[c] = 1;
+				} else {
+					result[c] += 1
+				}
+			}
+		}
+	}
+
+	return result;
+
+}
+
+tests = [
+	//getDNSStats(['epam.com']),
+	getDNSStats(['epam.com', 'info.epam.com'])
 ]
-console.log(a[0]);
+console.log(tests);
