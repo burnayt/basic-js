@@ -667,40 +667,58 @@ function getDNSStats(domains) {
 // 	return result;
 // }
 
-function minesweeper(matrix) {
-	result = [];
-	for (let i = 0; i < matrix.length; i++) {
-		result.push(matrix[i].slice());
-		for (let j = 0; j < matrix[i].length; j++) {
-			let mines = 0;
-			result[i][j] = 0;
-			for (let z = -1; z < 2; z++) {
-				for (let k = -1; k < 2; k++){
-					if(z==0 && k==0) continue;
-					if(i+z<0 || i+z>=matrix.length) continue;
-					if(j+k<0 || j+k>=matrix[i].length) continue;   //matrix[i][j].length) continue;
-					console.log(i+z,j+k);
-					if(matrix[i+z][j+k] == true){
-						result[i][j] += 1;
-					}
+// function minesweeper(matrix) {
+// 	result = [];
+// 	for (let i = 0; i < matrix.length; i++) {
+// 		result.push(matrix[i].slice());
+// 		for (let j = 0; j < matrix[i].length; j++) {
+// 			let mines = 0;
+// 			result[i][j] = 0;
+// 			for (let z = -1; z < 2; z++) {
+// 				for (let k = -1; k < 2; k++){
+// 					if(z==0 && k==0) continue;
+// 					if(i+z<0 || i+z>=matrix.length) continue;
+// 					if(j+k<0 || j+k>=matrix[i].length) continue;   //matrix[i][j].length) continue;
+// 					console.log(i+z,j+k);
+// 					if(matrix[i+z][j+k] == true){
+// 						result[i][j] += 1;
+// 					}
 
-				}
-				
-			}
+// 				}
+
+// 			}
+// 		}
+
+// 	}
+// 	return result;
+// }
+
+// function sortByHeight(arr) {
+// 	let newArr = arr.filter( (e) => e!=-1 )
+// 	newArr.sort((a,b) => a-b);
+// 	let j = 0;
+// 	for(let i = 0; i < arr.length; i++){
+// 		if(arr[i] != -1){
+// 			arr[i]=newArr[j];
+// 			j++
+// 		}
+// 	}
+// 	return arr;
+
+// }
+function getSumOfDigits(n) {
+	let str = n.toString();
+	let result = 0;
+	while(str.length > 1){
+		result = str.split('').reduce((prev, cur)=>{
+			return parseInt(prev) + parseInt(cur)
 		}
-		
+		);
+		str = result+"";
 	}
-	return result;
+	return str;
 }
 tests = [
-	minesweeper([
-		[true, false, false],
-		[false, true, false],
-		[false, false, false],
-	]),
-	minesweeper([
-        [false, false, false],
-        [false, false, false],
-      ]),
+	getSumOfDigits(100)
 ]
 console.log(tests);
